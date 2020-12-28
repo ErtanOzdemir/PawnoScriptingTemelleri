@@ -62,3 +62,65 @@ Print fonksiyonundan sonra noktalı virgül kullanmamız ifadenin sonlandırıld
 Print'ten sonra virgül kullanmak daha ifadenin bitmediği devamının olduğunu belirtmek için kullanılır. Böylelik derleyici kodunuzu okurken print() fonksiyonun sonunda durmaz, virgülü görünce devamının olduğunu anlar ve okumaya devam eder.
 
 ## Fonksiyonlar
+
+Aslında fonksiyonun ne olduğunu yukarıda çokça bahsettim. print fonksiyonu buna örnekti. Kütüphanelerin içerisinde ki hazır fonksiyonları kullanabileceğiniz gibi aynı zaman kendi fonksiyonlarınızı tanımlamanızda mümkün. Aşağıda ki örneğe bakalım;
+
+````
+#include <a_samp>
+ 
+main()
+{
+	return MyFunction();
+}
+ 
+MyFunction()
+{
+	print("Hello World!");
+	return 1;
+}
+````
+
+Main ifadesinin dışarısında `MyFunction` isimli bir fonksiyon görüyorsunuz. Bu fonksiyonu kendimiz main'in dışarısında tanımladık. Fonksiyon adını (MyFunction kısmını) istediğiniz gibi değiştirebilirsiniz.
+
+Burada ki fonksiyonun temel görevini anlamak için küme parantezlerinin içine bakalım. Küme parantezinin içerisinde `print("Hello World")` yazıyor. Yani ekrana "Hello World" yazdırıyor. Fakat siz bu fonksiyonu main fonksiyonun içerisine yazmazsanız kodunu çalışmaz. Çünkü en başta da değindiğim gibi kodlarınızı çalıştırmak için main'in içerisine yazamalısınız.
+
+İsterseniz MyFunction'ı return değeri olarak kullanmayabilirsiniz;
+````#include <a_samp>
+ 
+main()
+{
+	MyFunction();
+	return 1;
+}
+ 
+MyFunction()
+{
+	print("Hello World!");
+	return 1;
+}
+````
+
+Bu şekilde de kodunuz düzgün bir şekilde çalışacaktır.
+
+### Parametreler
+
+Fonksiyonunuzun dışarıyla iletişime geçebilmesi için parametrelere ihtiyacı vardır. 
+
+````
+#include <a_samp>
+ 
+main()
+{
+	return MyFunction("Hello World!");
+}
+ 
+MyFunction(string[])
+{
+	print(string);
+	return 1;
+}
+````
+
+MyFunction'ın parantezlerinin içerisinde görebildiğiniz üzere `string[]` isimli bir değişken var. Bu değişken aynı zamanda fonksiyonumuzun parametresidir. Buradaki parametre der ki; bu fonksiyon içerisine string türünde bir değişken değeri gerekli. Dolayısıyla siz buraya string türünde bir değişken değeri yazdığınız zaman, değişken adının yazdığı yere yani MyFunction'da ki print'in içerisine taşınır. Böylelikle main'in içerisinde ki `MyFunction("Hello Word!")` fonskiyonu ekrana `Hello World!` bastırır. Eğer string istenilen yere bir karakter değilde sayı (integer) değer yazdırsaydık hata alırdık. Yukarıda köşeli paranteze sahip olan ifadeyi ilerleyen bölümlerde anlatacağım.
+
+## Değişkenler (Variables)
