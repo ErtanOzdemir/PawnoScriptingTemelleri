@@ -46,6 +46,7 @@ Yukarıda görüdüğükleriniz projenize dahil edebileceğiniz diğer kütüpha
 Return komutu ne olduğunu anlatmak amacıyla main'e bir değer döndürür. 1 ifadesi işlemin başarılı olduğunu, 0 ifadesi ise başarısız olduğunu temsil eder. return komutu hakkında daha detaylı bilgi için [burayı]([https://link](https://medium.com/royto/return-komutu-ne-i%CC%87%C5%9Fe-yarar-83a90b9e475b)) okumanızı öneririm.
 
 ### Statements
+<hr>
  Basit script'imizde return ve print fonksiyonunun noktali virgül ( ; ) ile bitirildiğini görüyoruz. Noktalı virgül statement'ın (ifadenin) bitirildiğini belirtmek için kullanılır. Yani print fonksiyonu yazdım ve işim bitti diyebilmek için kullanılır.
 
  ````
@@ -62,6 +63,7 @@ Print fonksiyonundan sonra noktalı virgül kullanmamız ifadenin sonlandırıld
 Print'ten sonra virgül kullanmak daha ifadenin bitmediği devamının olduğunu belirtmek için kullanılır. Böylelik derleyici kodunuzu okurken print() fonksiyonun sonunda durmaz, virgülü görünce devamının olduğunu anlar ve okumaya devam eder.
 
 ## Fonksiyonlar
+<hr>
 
 Aslında fonksiyonun ne olduğunu yukarıda çokça bahsettim. print fonksiyonu buna örnekti. Kütüphanelerin içerisinde ki hazır fonksiyonları kullanabileceğiniz gibi aynı zaman kendi fonksiyonlarınızı tanımlamanızda mümkün. Aşağıda ki örneğe bakalım;
 
@@ -124,3 +126,72 @@ MyFunction(string[])
 MyFunction'ın parantezlerinin içerisinde görebildiğiniz üzere `string[]` isimli bir değişken var. Bu değişken aynı zamanda fonksiyonumuzun parametresidir. Buradaki parametre der ki; bu fonksiyon içerisine string türünde bir değişken değeri gerekli. Dolayısıyla siz buraya string türünde bir değişken değeri yazdığınız zaman, değişken adının yazdığı yere yani MyFunction'da ki print'in içerisine taşınır. Böylelikle main'in içerisinde ki `MyFunction("Hello Word!")` fonskiyonu ekrana `Hello World!` bastırır. Eğer string istenilen yere bir karakter değilde sayı (integer) değer yazdırsaydık hata alırdık. Yukarıda köşeli paranteze sahip olan ifadeyi ilerleyen bölümlerde anlatacağım.
 
 ## Değişkenler (Variables)
+<hr>
+
+Bir değişken basitçe hafızanın bir parçasıdır. Hafıza ise verilerin depolandığı, gerektiğinde okunup değiştirilebildiği yerdir. Değişkenler bir veya birden fazla hücreden oluşabilir. Bir hücre 32 bit'ten oluşur bu da 4 byte'a eşittir. Eğer bit ve byte'ın ne olduğunu bilmiyorsanız şöyle açıklayabiliriz. Bilgisayarlar 1 ve 0'lar ile çalışır. Biz buna binary (ikili) sayı sistemi diyoruz. Siz kodlarınızı yazıp derlediğiniz (compile) zaman kodlarınız, bilgisayarınızın anladığı dile yani binary'e dönüştürülür. Örneğin siz 123 sayısını bilgisayar üzerinde yazdığınız zaman, bilgisayarınız bu sayıyı binary yani (1111011) olarak görür. Her 1 ve 0 bir bit olarak sayılır. Yani 123 toplam 7 bitlik bir sayıdır. Eğer 8 bit olsaydı, o zaman 1 byte'lık bir sayı diyebilirdik. Günlük yaşantımızda ikilik sayı sistemi yerine 10'lu sayı sistemini kullandığımızı unutmayalım. Konumuzdan çok fazla uzaklaşmadan değişkenlere geri dönelim.
+
+### Deklarasyon
+
+Bir değişkeni yaratmak için onu deklare etmemiz gerekir.
+````
+new myVariable;
+
+````
+
+Bu sisteme myVariable isimli yeni bir değişken yarattığımızı haber verir ve ilk değerini atamazsanız otomatik olarak sizin yerinize 0 değeri atanır.
+
+#### Değer Atama
+
+Eğer değişken değerinin sıfır yerine farklı bir sayı olmasını istiyorsanız o halde böyle yapmanız gerekir;
+
+````
+new myVariable = 7;
+````
+
+Böylelikle myVariable isimli değişkenin değerini 7 yapmış olduk.
+
+Bu değişkeni ekrana bastırmak için ne yapmalıyız?
+````
+new myVariable = 7; 
+printf("Merhaba %d", myVariable);
+````
+printf() fonksiyonu kullandığımıza dikkat edin. print() fonksiyonuna göre farkı, string ifadelere müdahale edebilmemizdir. `%d` burada format tanımlayıcısıdır. Integerlar (tam sayılar) için %d kullanılır. Yani "Merhaba" yazısının yanına tamsayı bir değer geleceğini bildirir ve ekrana `Merhaba 7` yazdırır.
+
+````
+new myVariable = 7;
+printf("%d", myVariable);
+myVariable = 8;
+printf("%d", myVariable);
+
+````
+
+Yukarıdaki kod, ilk olarak ekrana 7'yi bastırır. İlk printf() fonksiyonundan sonra myVariable değişkeninin değeri 8 olarak değiştirilmiş. Bu sebeple ikinci printf() ekrana 8'i bastırır.
+
+Değişkenler üzerinde oynayabilirsiniz. Bunun örnekleri aşağıdadır.
+
+````
+myVariable = myVariable + 4;
+````
+Değişkenin değerini 4 arttırır.
+
+````
+myVariable += 4;
+````
+Bu da aynı şekilde değişkenin değerini 4 arttırır.
+
+```
+myVariable -= 4;
+```
+4 azaltır.
+
+```
+myVariable *= 4;
+```
+4 ile çarpar.
+```
+myVariable /= 4;
+```
+4'e böler.
+
+#### Diziler (Arrays)
+
