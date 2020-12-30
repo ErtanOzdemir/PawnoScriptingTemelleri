@@ -54,11 +54,15 @@ Return komutu ne olduğunu anlatmak amacıyla main'e bir değer döndürür. 1 i
  ````
 Ayrıca yukarıda ki kodu incelediğimizde bir küme parantezlerini görüyoruz ({}). Küme parantezleri ise içerisine yazılan kodların bir arada çalıştırılmasını sağlar. Örneğin aşağıda ki kodda küme parantezlerini kullanmayalım.
 
-````main() print("Hello World!"); return 1;````
+````pwn 
+main() print("Hello World!"); return 1;
+````
 
 Print fonksiyonundan sonra noktalı virgül kullanmamız ifadenin sonlandırıldığını belirtiyor bu yüzden print'ten sonra return'ün okunup okunmayacağı muğlak olur. Bu yüzden derleyici programını derlerken aynı karmaşıklığın içerisine kendi de düşeceği için hata verecektir. Eğer halen küme parantezi kullanmak istemiyorsanız bunu yapmanın bir yolu ifadenin print fonksiyonunda son bulmadığını belirtmektir. Peki bunu nasıl yapabilirsiniz?
 
-````main() print("Hello World!"), return 1;````
+````pwn
+main() print("Hello World!"), return 1;
+````
 
 Print'ten sonra virgül kullanmak daha ifadenin bitmediği devamının olduğunu belirtmek için kullanılır. Böylelik derleyici kodunuzu okurken print() fonksiyonun sonunda durmaz, virgülü görünce devamının olduğunu anlar ve okumaya devam eder.
 
@@ -194,7 +198,7 @@ myVariable /= 4;
 ```
 4'e böler.
 
-### Diziler (Arrays)
+## Diziler (Arrays)
 
 Diziler, birden fazla veriyi tek seferde saklayabileceğiniz ve dinamik olarak erişebileceğiniz değişkenlerdir. Bir dizi derleme zamanında (compile time) deklare edilir bu yüzden kaç tane veri saklayacağınızı daha önceden bilmeniz gerekir.
 
