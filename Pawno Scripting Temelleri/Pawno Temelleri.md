@@ -239,3 +239,53 @@ Bu kod size 2. sırdaki sıfırın yeni değerini ayarlamanızı sağlar. Böyle
 ```
 Eğer dizinin dahilinde olmayan örneğin 5 elemanlı bir dizide 6. elemanı değiştirmeye çalışırsanız hata alırsınız.
 
+
+## Strings (Karakter Dizileri)
+Yukarıda daha sonra anlatacağımı söylediğim önemli bir konudayız. Şu ana kadar değişkenlerimize genellikle tam sayılar atadık. Şimdi ise değişkenlerimize nasıl karakterler (a,b,c gibi) atayabiliriz onu inceleyeceğiz. Stringler, içerisinde birden çok karakter veya insanların okuyabileceği kelimeleri ve cümleleri barındırabilen bir dizi çeşididr. Karakterler hafızada 1 byte'lık yer kaplar. Bunu nasıl hesaplıyoruz? Örneğin "A" harfine, ASCII tablosu dediğimiz tabloda onluk tabana göre karşılık gelen sayı 65'tir. 65 sayısını 2'li sayı sistemine (binary) dönüştürdüğümüz zaman (1000001) 7 bitlik yer kaplar fakat şu an değinmeyeceğimiz başka bir sbepten dolayı başına bir sıfır daha eklenir (01000001). Karakter dizilerinde her bir harf dizideki bir hücreyi tutar. Birazdan örneklerle inceleyeceğiz.
+
+PAWN "NULL terminated" (NULL: İngilizce'de boş gibi bir anlam taşımaktadır fakat kafanız karışmasın NULL'da aslında bir değerdir. NULL terminated - NULL ile sonlandırılmış  ) bir dildir. Yani bunun anlamı 0'a ulaşıldığında string ifadenin sonuna ulaşılmış olur. 20 hücreli bir dizide 19 karakter ve bir tane de NULL sonlandırma karakterine sahip olabilirsiniz. Aşağıda ki örneği inceleyelim.
+```pwn
+new myString[16] = "Hello World";
+```
+Yukarıda ki kod parçasında köşeli parantez içerisinde bulunan sayı yandaki tırnak içerisinde bulunan 15 harflik karakter dizisi için bellekte açılacak hücre sayısını belirtiyor. Tırnak işaretini kullanmamızın amacı atama operatörünün (=) sağında bulunan değerin string olduğunu bilgisayara anlatabilmek. Şimdi stringlerin dizilerle olan yakınlığını ortaya çıkaralım. Bellekte toplam 16 hücre açtık. Bu hücrelere tek bir harf atanır. Ayrıca boşlukta bir karakterdir. Dolayısıyla 16 hücrenin sadece 11 tanesi karakterlerle doldurulmuş olur. Ve tabiki dizinin bitirildiğini anlamak için 12. hücre de 0 (NULL) ile doldurularak bellekte toplam 16 hücreden 12'si kullanılmış olur. Geri kalan 4 hücrenin akıbeti önemli değildir. 
+
+```
+072 101 108 108 111 032 087 111 114 108 100 0 x x x x 
+```
+Yukarıda her bir hücreye denk gelen karakterlerin ASCII değerlerini, NULL terminated ifadesini ve bu ifadeden sonra önemli olmayan ayrılmış hücreleri (x) görüyorsunuz.
+
+Stringleri, aynı diziler gibi manipüle edebilirsiniz
+
+```pwn
+new myString[16] = "Hello World!";
+myString[1] = 97;
+```
+Yukarıdaki kod **myString** değişkeninin 1. harfini ASCII tablosunda 97'ye kaşılık gelen harf (a) ile değiştirir. Yani "Hello" değilde "H**a**llo" olur. Okunaklığı arttırmak amacıyla 97 yerine böyle de yapabiliriz;
+```pwn
+myString[1] = 'a';
+```
+"a" harfinin çevresinde ki tek tırnak işareti onu bir karakter olduğunu belirtir. Karakterlerin NULL terminated olması gerekmez. Bu yüzden sadece bir hücrelik yer kaplarlar.
+```pwn
+new myString[16] = "Hello World!";
+myString[1] = '\0';
+```
+'\0' 2 karakterdir ancak \ karakteri bir sonraki karakteri etkileyen özel bir karaterdir. \0 NULL anlamına gelir. Aşağıdaki kod parçası da aynı şeyi yapar.
+```pwn
+new myString[16] = "Hello World!";
+myString[1] = 0;
+
+```
+Yukarıdaki kodun artık birinci harfi null olduğu için sonraki karakterleri ekrana bastırmaz.
+```
+H
+```
+Fakat burada karıştırılmaması gereken önemli bir husus vardır;
+```pwn
+new myString[16] = "Hello World!";
+myString[1] = '0';
+```
+Yukarıdaki sıfır tek tırnak içerisinde olduğu için bir NULL ifade değil, karakterdir ve kodun çıktısı aşağıdaki gibi olur.
+```
+h0llo
+```
+## Escape character
