@@ -288,4 +288,33 @@ Yukarıdaki sıfır tek tırnak içerisinde olduğu için bir NULL ifade değil,
 ```
 h0llo
 ```
-## Escape character
+## Escape Character (Kaçış Karakteri)
+Daha önce kısaca değinmiştik. ters slaş (\\) işareti özel bir karakterdi.
+````
+'\'
+````
+yada:
+```
+"\"
+```
+Derlemeye çalıştığınız zaman hata alacaksınız çünkü ters slaş karakteri kendisinden sonra bir karakter ister. Bu karakterleri birazdan göreceğiz. Eğer istenilen karakter gelmezse de yine hata ile karşılaşabilirsiniz.
+
+|Özel Karakter |  İsmi        |  Açıklaması|
+| ------------- | ------------- |-----------|
+| \0  | NULL karakteri  |       String'i sonlandırır.     |
+| EOS  | NULL karakteri  | End of String (Görevi yukarıdakiyle aynı).            |
+| \n  | Yeni satır karakteri  |     Yeni satıra geçmenize yarar.       |
+| \\\  | Ters slaş  | Ekrana ters slaş yazdırmak istediğiniz zaman kullanılır.            |
+| \\'  | Tek tırnak  | String ifadenin içerisinde tek tırnak yazmak istediğinizde kullanılır.           |
+| \\"  | Çift tırnak  |       String ifadenin içerisinde çift tırnak yazmak istediğinizde kullanılır.     |
+| \xNNN;  | Hexadecimal'e çevirme  |    Karakterin **hexadecimal** karşılığını yazdırır.        |
+| \NNN;  | Decimal'e çevirme  | Karakterin **decimal** karşılığını yazdırır.            |
+ 
+ Yukarıda belki bir kısmı anlamamış olabilirsiniz onu hemen açıklıyayım; 
+
+ Mesela ekranda ki bir yazının tırnak içerisinde olmasını istiyorsunuz. Örneğin - **"İntibah" kitabının yazarı, Namık Kemal'dir.**
+ Bunu ekrana yazdırmaya çalıştığınız zaman çift tırnakların string belirten bir ifade mi yoksa sadece bir karakter mi olup olmadığını derleyici anlayamaz. Bu yüzden aşağıdaki gibi ter slaş kullanılmalıdır;
+
+ ````pwn
+ print(" \"İntibah\" kitabının yazarı Namık Kemal'dir. ");
+ ````
