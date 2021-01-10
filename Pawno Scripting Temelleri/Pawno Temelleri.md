@@ -316,5 +316,30 @@ Derlemeye çalıştığınız zaman hata alacaksınız çünkü ters slaş karak
  Bunu ekrana yazdırmaya çalıştığınız zaman çift tırnakların string belirten bir ifade mi yoksa sadece bir karakter mi olup olmadığını derleyici anlayamaz. Bu yüzden aşağıdaki gibi ter slaş kullanılmalıdır;
 
  ````pwn
- print(" \"İntibah\" kitabının yazarı Namık Kemal'dir. ");
+ print(" \"İntibah\" kitabının yazarı, Namık Kemal'dir. ");
  ````
+
+## Tags (Etiketler)
+Etiketler bir değişkenin işlevselliği ve nerede kullanılabileceği hakkında bilgi içeren belirteçlerdir. Etiketler, **strong** (büyük harfle başlayan) veya **weak** (küçük harfle başlayan) olabilirler. Örneğin; 
+```pwn
+new Float:a = 6.0;
+```
+Burada **'Float'** kısmı bir etikettir. **a** değişkeninin bir ondalıklı sayı olduğunu belirtir.
+
+```pwn
+native SetGravity(Float:gravity);
+```
+Yukarıda ki kodu incelediğimizde **SetGravity** fonksiyonu yalnızca Float (ondalıklı) türünde bir değer alıyor.
+
+```pwn
+SetGravity(6.0);
+new
+   Float:fGrav = 5.0;
+SetGravity(fGrav);
+```
+Yukarıda ilk olarak gravity'i (yerçekimini) 6.0'a daha sonra ise 5.0'a eşitleniyor. Yanlış yerde yanlış etiket kullanımı hatalara neden olabilir.
+
+```pwn
+SetGravity(MyTag:7);
+```
+Örneğin gravity'i 7'ye ayarlamak isteyelim. SetGravity fonksiyonu Float türünde bir değişken bekliyor. **'MyTag'** görüldüğü üzere bir **'Float'** olmadığı için bu şekilde fonksiyona değer vermek yanlıştır. Ayrıca şunu belirtmekte fayda var; Etiketler büyük harf - küçük harfe duyarlıdır.
