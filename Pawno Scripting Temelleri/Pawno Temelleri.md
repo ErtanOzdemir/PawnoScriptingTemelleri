@@ -343,3 +343,134 @@ Yukarıda ilk olarak gravity'i (yerçekimini) 6.0'a daha sonra ise 5.0'a eşitle
 SetGravity(MyTag:7);
 ```
 Örneğin gravity'i 7'ye ayarlamak isteyelim. SetGravity fonksiyonu Float türünde bir değişken bekliyor. **'MyTag'** görüldüğü üzere bir **'Float'** olmadığı için bu şekilde fonksiyona değer vermek yanlıştır. Ayrıca şunu belirtmekte fayda var; Etiketler büyük harf - küçük harfe duyarlıdır.
+
+## Kapsam (Scope)
+Kapsam bir değişkenin kullanılabileceği yerdir. Dört ana kapsam vardır. Bunlar; **local**, **local static**, **global** ve **global static**'tir.
+
+```pwn
+printf("%d", var);
+new var = 4;
+```
+Örneğin yukarıda ki kod yanlıştır.
+
+### local
+**local** değişkenler **"new"** belirteciyle bir fonksiyonun içinde veya bir fonksiyonun parçasının içinde tanımlanan değişkendir.
+
+```pwn
+MyFunc()
+{
+    new var1 = 4;
+    printf("%d", var1);
+    {
+        // var1 değişkeni halen alt katmanda etkindir.
+        new var2 = 8;
+        printf("%d %d", var1, var2);
+    }
+    // var2 daha yüksek katmanda olduğu için 
+	//  burada erişilebilir değildir.
+}
+// var1 burada erişilebilir değil.
+```
+
+Belki bu konu ilk bakışta anlaması zor gelse de aslında basittir. Bunu block'lardan (küme parantezlerinin arasında kalan yerler block olarak adledilir.) yararlanarak açıklarsak daha anlaşılır olur.
+
+```pwn
+{
+	new degisken = 1;
+	new toplam = 0;
+
+	{
+		new degisken2 = 2;
+		
+		// içteki block dışarıda ki block'un değişkenine erişebilir.
+
+		toplam = degisken + degisken2; // Hatasız çalışır
+	}
+
+	toplam = degisken+degisken2; // burada hata ile karşılaşırsınız.
+	
+	// Bunun sebebi dışarıdan, içeride ki block'un değişkenine ulaşamamamızdır.
+}
+```
+
+Ayrıca **local** değişkenler her zaman sıfırlanır. Örneğin;
+
+```pwn
+for (new i = 0; i < 3; i++)
+{
+    new
+        j = 1;
+    printf("%d", j);
+    j++;
+}
+```
+Bu kod aşağıdakini yazdıracak;
+
+```
+1
+1
+1
+```
+Çünkü **j** yaratılacak, bastırılacak, arttırılacak sonra ise yok edilecek. Dikkat ederseniz döngü her çalıştığında **j**'nin değeri artsa bile döngünün içerisinde değeri tekrar **1** olarak atanıyor.
+
+### static local
+**static local**'da aynı şekilde **local** gibi kullanılır. Tek farkı ise eski değerleri unutmamasıdır. Örneğin; 
+
+```pwn
+for (new i = 0; i < 3; i++)
+{
+    static
+        j = 1;
+    printf("%d", j);
+    j++;
+}
+```
+Bu kodun çıktısı;
+
+```
+1
+2
+3
+```
+Çünkü **j** static, dolayısıyla eski değerini hatırlayacaktır.
+
+### global
+
+**global** değişkenlere değerler, fonksiyonun dışarısında atanır ve herhangi bir fonksiyonda kullanılabilirler.
+
+```pwn
+new
+    gMyVar = 4;
+ 
+MyFunc()
+{
+    printf("%d", gMyVar);
+}
+```
+Ayrıca, ne kaybolurlar ne de sıfırlanırlar.
+
+### global static
+
+Yazının en başında yazılımcıların kodlarını parçalara böldüğüne değinmiştim. **global static** değişkenler de aynı **global**'lara benzer fakat global static'lere başka bir dosyadan erişmek istediğimiz zaman bunu yapamayız.
+
+Dosya1:
+```pwn
+static
+    gsMyVar = 4;
+ 
+MyFunc()
+{
+    printf("%d", gsMyVar);
+}
+ 
+#include "Dosya2"
+```
+
+Dosya2: 
+```pwn 
+MyFunc2()
+{
+    // Burası yanlış çünkü gsMyVar değişkeni burada yok.
+    printf("%d", gsMyVar);
+}
+```
